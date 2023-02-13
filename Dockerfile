@@ -15,5 +15,4 @@ COPY . .
 # Specify the command to run the application
 CMD [ "yarn", "start" ]
 
-# Expose port 3000 to allow communication to the container
 EXPOSE 3000
