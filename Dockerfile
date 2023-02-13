@@ -1,18 +1,9 @@
-FROM node:19.6.0
-
-# Set the working directory in the container to /app
+FROM node:16-alpine
+RUN apk add dumb-init
 WORKDIR /app
-
-# Copy the package.json and package-lock.json to the container
-COPY package*.json yarn.lock ./
-
-# Install the dependencies
-RUN yarn
-
-# Copy the rest of the application code to the container
-COPY . .
-
-# Specify the command to run the application
-CMD [ "yarn", "start" ]
-
+COPY --chown=node:node package.json yarn.lock ./
+RUN yarn install
+COPY --chown=node:node . .
 EXPOSE 3000
+USER node
+CMD ["dumb-init", "node", "app.js" ]
